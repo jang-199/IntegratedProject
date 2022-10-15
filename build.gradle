@@ -36,5 +36,5 @@ tasks.named('test') {
 }
 
 bootJar{
-	destinationDirectory = file("./distribute")
+	destinationDirectory = file("./target")
 }
