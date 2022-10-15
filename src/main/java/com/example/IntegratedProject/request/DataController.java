@@ -45,6 +45,11 @@ public class DataController {
         return "/form/index";
     }
 
+    @GetMapping("form/index")
+    String formIndex() {
+        return "form/index";
+    }
+
     @GetMapping("/form/features")
     String features() {
         return "form/features";
