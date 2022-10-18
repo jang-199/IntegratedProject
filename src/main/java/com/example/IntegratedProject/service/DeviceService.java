@@ -15,7 +15,7 @@ public class DeviceService { // 비즈니스 로직 - 중복 검사
     private DeviceRepository deviceRepository;
 
     //회원가입
-    public Integer register(Device device){
+    public String register(Device device){
         //같은 deviceId 중복시 등록 x
         checkDevice(device); // 중복 회원 검증
         deviceRepository.save(device);

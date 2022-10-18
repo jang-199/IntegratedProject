@@ -25,7 +25,7 @@ public class DeviceRepositoryTest extends IntegratedProjectApplicationTests {
     private DeviceRepository deviceRepository;
     @Autowired
     private DeviceService deviceService;
-    Integer deviceId = 1;
+    String deviceId = "1";
     //DeviceService deviceService = new DeviceService();
 
 
@@ -37,10 +37,12 @@ public class DeviceRepositoryTest extends IntegratedProjectApplicationTests {
         device.setId(deviceId);
 
         //when
-        Integer saveId = deviceService.register(device);
+        String saveId = deviceService.register(device);
+
+        int i = Integer.parseInt(saveId);
 
         //then
-        Device findDevice = deviceService.findOne(saveId).get();
+        Device findDevice = deviceService.findOne(i).get();
         Assertions.assertThat(device.getId()).isEqualTo(findDevice.getId()); //검증법
 
         //Device result = deviceRepository.findByid(device.getId()).get();
@@ -51,10 +53,10 @@ public class DeviceRepositoryTest extends IntegratedProjectApplicationTests {
     public void duplication(){ //중복검사
         //given
         Device device1 = new Device();
-        device1.setId(2);
+        device1.setId("2");
 
         Device device2 = new Device();
-        device2.setId(2);
+        device2.setId("2");
 
         //when
         deviceService.register(device1);
@@ -86,7 +88,7 @@ public class DeviceRepositoryTest extends IntegratedProjectApplicationTests {
         Optional<Device> device = deviceRepository.findById(deviceId);
 
         device.ifPresent(updateDevice ->{
-            updateDevice.setId(1234);
+            updateDevice.setId("1234");
             Device newDevice = deviceRepository.save(updateDevice);
             System.out.println(newDevice);
         });

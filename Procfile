@@ -1,1 +1,0 @@
-web: java -Dspring.server.port=$PORT -Dspring.profiles.active=production $JAVA_OPTS -jar "target/IntegratedProject-0.0.1-SNAPSHOT.jar"

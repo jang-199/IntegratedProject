@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class PowerDTO {
-    Integer deviceId;
+    String deviceId;
     PowerForm power;
 
 //    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone="Asia/Seoul")

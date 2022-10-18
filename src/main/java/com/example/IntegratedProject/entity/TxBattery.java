@@ -24,7 +24,7 @@ public class TxBattery {
 
     @NotNull
     @Column(name = "TX_BATTERY")
-    private Integer tx;
+    private String tx;
 
     @NotNull
     @Column(name = "DATE")
