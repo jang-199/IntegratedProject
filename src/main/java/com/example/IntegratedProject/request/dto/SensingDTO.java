@@ -9,5 +9,4 @@ public class SensingDTO {
     PowerForm power;
     //Integer battery
     SensingForm state;
-
 }

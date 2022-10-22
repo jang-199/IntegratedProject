@@ -12,10 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -38,17 +36,22 @@ public class DataController {
 
     @GetMapping
     String index() {
-        return "/form/index";
+        return "index";
     }
 
-    @GetMapping("/form/features")
+    @GetMapping("features")
     String features() {
-        return "form/features";
+        return "features";
     }
 
-    @GetMapping("/form/contact")
+    @GetMapping("contact")
     String contact() {
-        return "form/contact";
+        return "contact";
+    }
+
+    @GetMapping("user")
+    String user() {
+        return "user";
     }
 
 //    @GetMapping("/form/user")
@@ -318,7 +321,7 @@ public class DataController {
 
             JsonObject jsonObject = new JsonObject(); // 받아오는 객체를 Json 객체로 변환
 
-            jsonObject.addProperty("deiceId",next.getDevice().getId());
+            jsonObject.addProperty("deviceId",next.getDevice().getId());
             jsonObject.addProperty("state",next.getState());
             jsonObject.addProperty("date",next.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
             jsonObject.addProperty("power",next.getPower().getPower());
@@ -327,33 +330,43 @@ public class DataController {
         }
         return obj.toString();
     }
-    @ResponseBody
-    @PostMapping("/search/web") // Web으로 넘겨주는 정보. 유저가 선택한 날짜를 기준으로 최신 순으로 조회
-    String searchWeb(@RequestBody UserDTO userDTO){
-        log.info("web - UserPk : {}, LocalDate : {}", userDTO.getUserPk(), userDTO.getLocalDate());
 
-        String userPkParam = userDTO.getUserPk();
-        LocalDate localDate = userDTO.getLocalDate();
+    @GetMapping("/search/web") // Web으로 넘겨주는 정보. 유저가 선택한 날짜를 기준으로 최신 순으로 조회
+    String searchWeb(@RequestParam(value = "id")  String id,
+                     @RequestParam(value = "datetimepicker1Input") String datetimepicker1Input,
+                     Model model){
+        log.info("web - UserPk : {}, LocalDate : {}", id, datetimepicker1Input);
 
-        List<Sensing> sensing = sensingRepository.findByUserPkAndLocalDateOrderByDateDesc(new UserPk(userPkParam), localDate).get();
-        // UserPK 값과 날짜를 받아 DB에서 최신 순으로 찾기
+        String userPkParam = id;
+//        LocalDate localDate = datetimepicker1Input;
+        String year = datetimepicker1Input.substring(0,4);
+        String month = datetimepicker1Input.substring(6,8);
+        String date = datetimepicker1Input.substring(10,12);
 
-        Iterator<Sensing> iterator = sensing.iterator(); // 리스트의 데이터 담고 반복하는 반복자 객체를 선언
+        log.info("year : {}, month : {}, date : {}",year,month,date);
+        LocalDate of = LocalDate.of(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(date));
 
-        JsonArray obj = new JsonArray();// Json 들이 들어갈 Array 선언
+        List<Sensing> sensing = sensingRepository.findByUserPkAndLocalDateOrderByDateDesc(new UserPk(id), of).get();
+//        // UserPK 값과 날짜를 받아 DB에서 최신 순으로 찾기
+//
+//        Iterator<Sensing> iterator = sensing.iterator(); // 리스트의 데이터 담고 반복하는 반복자 객체를 선언
+//
+//        JsonArray obj = new JsonArray();// Json 들이 들어갈 Array 선언
+//
+//        while (iterator.hasNext()){
+//            Sensing next = iterator.next(); // 인덱스 값을 반환하고 다음 인덱스로 커서를 옮김 (반환 값 리턴)
 
-        while (iterator.hasNext()){
-            Sensing next = iterator.next(); // 인덱스 값을 반환하고 다음 인덱스로 커서를 옮김 (반환 값 리턴)
+//            JsonObject jsonObject = new JsonObject(); // 받아오는 객체를 Json 객체로 변환
 
-            JsonObject jsonObject = new JsonObject(); // 받아오는 객체를 Json 객체로 변환
+//            jsonObject.addProperty("deviceId",next.getDevice().getId());
+//            jsonObject.addProperty("state",next.getState());
+//            jsonObject.addProperty("date",next.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+//            jsonObject.addProperty("power",next.getPower().getPower());
 
-            jsonObject.addProperty("deiceId",next.getDevice().getId());
-            jsonObject.addProperty("state",next.getState());
-            jsonObject.addProperty("date",next.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-            jsonObject.addProperty("power",next.getPower().getPower());
+//            obj.add(jsonObject);
+//
+        model.addAttribute("test", sensing);
 
-            obj.add(jsonObject);
-        }
-        return obj.toString();
+        return "user";
     }
 }
