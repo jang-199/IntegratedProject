@@ -10,11 +10,10 @@ body {
     background-image: linear-gradient(
             rgba(224, 223, 223, 0.658),
             rgba(224, 223, 223, 0.658)
-    ), url('twi001t1475192_l.jpg');
+    ), url('best-contact-us-pages-760x400.png');
     background-repeat: no-repeat;
     background-size: cover;
 }
-
 
 .cover-container {
     max-width: 80em;

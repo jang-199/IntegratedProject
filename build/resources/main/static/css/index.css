@@ -1,6 +1,9 @@
 body {
     text-shadow: 0 .05rem .1rem rgba(0, 0, 0, 0.5);
-    background-image: url('twi001t1475192_l.jpg');
+    background-image: linear-gradient(
+            rgba(224, 223, 223, 0.658),
+            rgba(224, 223, 223, 0.658)
+    ), url('twi001t1475192_l.jpg');
     background-repeat: no-repeat;
     background-size: cover;
 }
