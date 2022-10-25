@@ -197,14 +197,14 @@ public class DataController {
     }
 
     @ResponseBody
-    @PostMapping("/update/rxbattery") // uno 보드에서 받아오는 배터리 정보
-    void rxBattery(@RequestBody BatteryDTO batteryDTO) {
-        log.info("deviceId : {}, RX배터리 용량 : {} ", batteryDTO.getDeviceId(), batteryDTO.getBatteryCapacity());
+    @GetMapping("/update/rxbattery") // uno 보드에서 받아오는 배터리 정보
+    void rxBattery(@RequestParam(value = "batteryCapacity") String batteryCapacity,@RequestParam(value = "deviceId") String deviceId) {
+        log.info("deviceId : {}, RX배터리 용량 : {} ", deviceId, batteryCapacity);
 
         RxBattery rxBattery = new RxBattery();
 
-        rxBattery.setRx(batteryDTO.getBatteryCapacity());
-        rxBattery.setDevice(new Device(batteryDTO.getDeviceId()));
+        rxBattery.setRx(batteryCapacity);
+        rxBattery.setDevice(new Device(deviceId));
 
         rxBatteryRepository.save(rxBattery);
     }
@@ -284,20 +284,22 @@ public class DataController {
     }
 
     @ResponseBody
-    @PostMapping("/update/sensing") // uno 보드에서 받아오는 정보들
-    void sensing(@RequestBody SensingDTO sensingDTO) {
-        log.info("sensing - deviceId : {}, 출입 방향 : {}", sensingDTO.getDeviceId(), sensingDTO.getState());
+    @GetMapping("/update/sensing") // uno 보드에서 받아오는 정보들
+    void sensing(@RequestParam(value = "state") String state, @RequestParam(value = "deviceId") String deviceId,
+                 @RequestParam(value = "power") String power,
+                 @RequestParam(value = "userPk") String userPk) {
+        log.info("sensing - deviceId : {}, 출입 방향 : {}", deviceId, state);
 
         Sensing sensing = new Sensing();
-        Power power = new Power();
+        Power power1 = new Power();
 
-        power.setPower(sensingDTO.getPower().toString());
-        power.setDevice(new Device(sensingDTO.getDeviceId()));
+        power1.setPower(power);
+        power1.setDevice(new Device(deviceId));
 
-        sensing.setState(sensingDTO.getState().toString()); // In, Out 정보
-        sensing.setDevice(new Device(sensingDTO.getDeviceId())); // Device Id 값
-        sensing.setUserPk(new UserPk(sensingDTO.getUserPk())); // UserPK 값
-        sensing.setPower(power); // On, Off 정보 및 Power Entity Cascade로 생성
+        sensing.setState(state); // In, Out 정보
+        sensing.setDevice(new Device(deviceId)); // Device Id 값
+        sensing.setUserPk(new UserPk(userPk)); // UserPK 값
+        sensing.setPower(power1); // On, Off 정보 및 Power Entity Cascade로 생성
 
         sensingRepository.save(sensing);
     }
@@ -368,5 +370,10 @@ public class DataController {
         model.addAttribute("test", sensing);
 
         return "user";
+    }
+
+    @GetMapping("testquery")
+    void testtest(@RequestParam("data") String data) {
+        log.info("data={}",data);
     }
 }
