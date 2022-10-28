@@ -39,7 +39,7 @@ public class RxBatteryRepositoryTest extends IntegratedProjectApplicationTests {
         Optional<RxBattery> rBattery = rxBatteryRepository.findById(id);
 
         rBattery.ifPresent(updateRxBattery ->{
-            updateRxBattery.setRx(90);
+            updateRxBattery.setRx("90");
             RxBattery newRxBattery = rxBatteryRepository.save(updateRxBattery);
             System.out.println(newRxBattery);
         });
