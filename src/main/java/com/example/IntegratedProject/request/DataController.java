@@ -54,44 +54,6 @@ public class DataController {
         return "user";
     }
 
-//    @GetMapping("/form/user")
-//    String user(Model model){
-//        List<TestObj> list1 = new ArrayList<>();
-//        TestObj testObj1 = new TestObj();
-//        TestObj testObj2 = new TestObj();
-//        TestObj testObj3 = new TestObj();
-//
-//        testObj1.setDeviceId("123");
-//        testObj2.setDeviceId("456");
-//        testObj3.setDeviceId("789");
-//
-//        testObj1.setOnOff("On");
-//        testObj2.setOnOff("Off");
-//        testObj3.setOnOff("On");
-//
-//        testObj1.setRxBattery("90");
-//        testObj2.setRxBattery("80");
-//        testObj3.setRxBattery("70");
-//
-//        testObj1.setTxBattery("70");
-//        testObj2.setTxBattery("80");
-//        testObj3.setTxBattery("90");
-//
-//        testObj1.setTime(LocalDateTime.now());
-//        testObj2.setTime(LocalDateTime.now());
-//        testObj3.setTime(LocalDateTime.now());
-//
-//        testObj1.setVector("In");
-//        testObj2.setVector("Out");
-//        testObj3.setVector("In");
-//
-//        list1.add(testObj1);
-//        list1.add(testObj2);
-//        list1.add(testObj3);
-//
-//        model.addAttribute("test",list1);
-//        return "form/user";
-//    }
 
     @ResponseBody
     @PostMapping("/register/device") // 기기 등록
@@ -254,19 +216,6 @@ public class DataController {
         return jsonObject.toString();
     }
 
-//    @ResponseBody
-//    @PostMapping("/update/power") // 아두이노 on off 정보
-//    void power(@RequestBody PowerDTO powerDTO) {
-//        log.info("작동 여부:{}, deviceId:{}", powerDTO.getPower(), powerDTO.getDeviceId());
-//
-//        Power power = new Power();
-//
-//        power.setPower(powerDTO.getPower().toString());
-//        power.setDevice(new Device(powerDTO.getDeviceId()));
-//
-//        powerRepository.save(power);
-//    }
-
     @ResponseBody
     @PostMapping("/search/power") // 아두이노 on off 최신 정보 조회
     String searchPower(@RequestBody PowerDTO powerDTO) {
@@ -288,7 +237,7 @@ public class DataController {
     void sensing(@RequestParam(value = "state") String state, @RequestParam(value = "deviceId") String deviceId,
                  @RequestParam(value = "power") String power,
                  @RequestParam(value = "userPk") String userPk) {
-        log.info("sensing - deviceId : {}, 출입 방향 : {}", deviceId, state);
+        log.info("sensing - deviceId : {}, 출입 방향 : {}, power : {}" , deviceId, state, power);
 
         Sensing sensing = new Sensing();
         Power power1 = new Power();
@@ -349,24 +298,7 @@ public class DataController {
         LocalDate of = LocalDate.of(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(date));
 
         List<Sensing> sensing = sensingRepository.findByUserPkAndLocalDateOrderByDateDesc(new UserPk(id), of).get();
-//        // UserPK 값과 날짜를 받아 DB에서 최신 순으로 찾기
-//
-//        Iterator<Sensing> iterator = sensing.iterator(); // 리스트의 데이터 담고 반복하는 반복자 객체를 선언
-//
-//        JsonArray obj = new JsonArray();// Json 들이 들어갈 Array 선언
-//
-//        while (iterator.hasNext()){
-//            Sensing next = iterator.next(); // 인덱스 값을 반환하고 다음 인덱스로 커서를 옮김 (반환 값 리턴)
 
-//            JsonObject jsonObject = new JsonObject(); // 받아오는 객체를 Json 객체로 변환
-
-//            jsonObject.addProperty("deviceId",next.getDevice().getId());
-//            jsonObject.addProperty("state",next.getState());
-//            jsonObject.addProperty("date",next.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-//            jsonObject.addProperty("power",next.getPower().getPower());
-
-//            obj.add(jsonObject);
-//
         model.addAttribute("test", sensing);
 
         return "user";

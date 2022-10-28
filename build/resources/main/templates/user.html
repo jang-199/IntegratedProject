@@ -36,19 +36,19 @@
             <input type="submit" class="btn btn-outline-success" value="날짜 조회"/>
         </div>
     </form>
-        <table class="table table-success table-striped">
-            <tr>
-                <th>기기 id</th>
-                <th>시간</th>
-                <th>방향</th>
-            </tr>
-            <tr th:each="testobj : ${test}">
-                <td th:text="${#strings.substring(testobj.device,10,13)}">기기 id</td>
-                <td th:text="${#strings.substring(testobj.date,11,19)}">시간</td>
-                <td th:text="${testobj.state}">방향</td>
-            </tr>
-        </table>
-    </div>
+    <table class="table table-success table-striped">
+        <tr>
+            <th>기기 번호</th>
+            <th>시간</th>
+            <th>방향</th>
+        </tr>
+        <tr th:each="testobj : ${test}">
+            <td th:text="${#strings.substring(testobj.device,10,13)}">기기 id</td>
+            <td th:text="${#strings.substring(testobj.date,11,19)}">시간</td>
+            <td th:text="${testobj.state}">방향</td>
+        </tr>
+    </table>
+</div>
 <footer class="mt-auto text-black text-center">
     <p>Cover 2022, Gavengers Allrights reserved </p>
 </footer>
