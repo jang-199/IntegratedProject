@@ -49,13 +49,4 @@ public class Sensing {
     @ManyToOne(cascade = CascadeType.PERSIST) //센싱되는 시점에서의 POWER값을 알기 위해 조인
     @JoinColumn(name = "POWER")
     private Power power;
-//    @ManyToOne //센싱되는 시점에서의 RB값을 알기 위해 조인
-//    @JoinColumn(name = "RB")
-//    private RBattery rbattery;
-//
-//    @ManyToOne //센싱되는 시점에서의 LB값을 알기 위해 조인
-//    @JoinColumn(name = "LB")
-//    private LBattery lbattery;
-
-
 }

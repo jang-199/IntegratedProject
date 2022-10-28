@@ -7,6 +7,5 @@ public class SensingDTO {
     String deviceId;
     String userPk;
     PowerForm power;
-    //Integer battery
     SensingForm state;
 }
