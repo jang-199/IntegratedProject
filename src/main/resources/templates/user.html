@@ -18,9 +18,9 @@
         <div>
             <div class="float-md-start mb-0" style="font-weight: bold;" id="name" name="name"></div>님
             <nav class="nav nav-masthead justify-content-center float-md-end">
-                <a class="nav-link" href="http://localhost:8080/">Home</a>
-                <a class="nav-link" href="http://localhost:8080/features">Features</a>
-                <a class="nav-link" href="http://localhost:8080/contact">Contact</a>
+                <a class="nav-link" href="http://124.60.219.83:8080/">Home</a>
+                <a class="nav-link" href="http://124.60.219.83:8080/features">Features</a>
+                <a class="nav-link" href="http://124.60.219.83:8080/contact">Contact</a>
                 <a class="nav-link" href="javascript:void(0)" onclick="kakaoLogout();">Logout</a>
             </nav>
         </div>
@@ -44,27 +44,23 @@
             <th>방향</th>
             <th>전원</th>
         </tr>
-<!--        <tr th:each="sensingsObj : ${pagePage}">-->
-<!--            <td th:text="${#strings.substring(sensingsObj.device,10,13)}">기기 번호</td>-->
-<!--            <td th:text="${#strings.substring(sensingsObj.date,11,19)}">시간</td>-->
-<!--            <td th:text="${sensingsObj.state}">방향</td>-->
-<!--        </tr>-->
-        <tr th:each="sensingsObj,i : ${sensings}">
-            <td th:text="${i.count}"></td>
-            <td th:text="${sensingsObj.device.id}">기기 ID</td>
-            <td th:text="${#strings.substring(sensingsObj.date,11,19)}">시간</td>
-            <td th:text="${sensingsObj.state}">방향</td>
-            <td th:text="${sensingsObj.power.power}">전원</td>
+        <tr th:each="sensingListObj,i : ${sensingList}">
+            <td th:text="${i.count}">No.</td>
+            <td th:text="${sensingListObj.device.id}">기기 ID</td>
+            <td th:text="${#strings.substring(sensingListObj.date,11,19)}">시간</td>
+            <td th:text="${sensingListObj.state}">방향</td>
+            <td th:text="${sensingListObj.power.power}">전원</td>
         </tr>
     </table>
 
     <div class="pagination">
         <ul>
             <li th:each="page : ${#numbers.sequence(1, totalPage)}">
-                <a th:href="@{/search/web(datetimepicker1Input=${#datetimepicker1Input},userPk=${userPk},page=${page})}" th:text="${page}"></a>
+                <a th:href="@{/search/web(datetimepicker1Input=${#datetimepicker1Input},userPk=${userPk},page=${page-1})}" th:text="${page}"></a>
             </li>
         </ul>
     </div>
+
 </div>
 <footer class="mt-auto text-black text-center">
     <p>Cover 2022, Gavengers Allrights reserved </p>
@@ -100,7 +96,7 @@
                 url: '/v1/user/unlink',
                 success: function (response) {
                     console.log(response)
-                    location.href = 'http://localhost:8080'
+                    location.href = 'http://124.60.219.83:8080'
                 },
                 fail: function (error) {
                     console.log(error)
@@ -115,7 +111,9 @@
             success: function (res) {
                 // 이메일, 성별, 닉네임, 프로필이미지
                 var id = res.id;
-                document.getElementById("id").value = parseInt(id);
+                var name = res.properties.nickname;
+                document.getElementById("name").innerHTML = name;
+                document.getElementById("id").value = String(id);
                 console.log(id);
             }
         });

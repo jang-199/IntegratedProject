@@ -16,7 +16,7 @@
 <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
     <header>
         <div>
-            <h3 class="float-md-start mb-0"></h3>
+            <div class="float-md-start mb-0" style="font-weight: bold;" id="name" name="name"></div>님
             <nav class="nav nav-masthead justify-content-center float-md-end">
                 <a class="nav-link" href="http://124.60.219.83:8080/">Home</a>
                 <a class="nav-link" href="http://124.60.219.83:8080/features">Features</a>
@@ -32,22 +32,35 @@
             <span class='input-group-text' data-td-target='#datetimepicker1' data-td-toggle='datetimepicker'>
                     <span class='fa fa-solid fa-calendar'></span>
                 </span>
-            <input type="hidden" id="id" name="id" value=""/>
+            <input type="hidden" id="userPk" name="userPk" value=""/>
             <input type="submit" class="btn btn-outline-success" value="날짜 조회"/>
         </div>
     </form>
     <table class="table table-success table-striped">
         <tr>
-            <th>기기 번호</th>
+            <th>No.</th>
+            <th>기기 ID</th>
             <th>시간</th>
             <th>방향</th>
+            <th>전원</th>
         </tr>
-        <tr th:each="testobj : ${test}">
-            <td th:text="${#strings.substring(testobj.device,10,13)}">기기 id</td>
-            <td th:text="${#strings.substring(testobj.date,11,19)}">시간</td>
-            <td th:text="${testobj.state}">방향</td>
+        <tr th:each="sensingListObj,i : ${sensingList}">
+            <td th:text="${i.count}">No.</td>
+            <td th:text="${sensingListObj.device.id}">기기 ID</td>
+            <td th:text="${#strings.substring(sensingListObj.date,11,19)}">시간</td>
+            <td th:text="${sensingListObj.state}">방향</td>
+            <td th:text="${sensingListObj.power.power}">전원</td>
         </tr>
     </table>
+
+    <div class="pagination">
+        <ul>
+            <li th:each="page : ${#numbers.sequence(1, totalPage)}">
+                <a th:href="@{/search/web(datetimepicker1Input=${#datetimepicker1Input},userPk=${userPk},page=${page-1})}" th:text="${page}"></a>
+            </li>
+        </ul>
+    </div>
+
 </div>
 <footer class="mt-auto text-black text-center">
     <p>Cover 2022, Gavengers Allrights reserved </p>
@@ -98,7 +111,9 @@
             success: function (res) {
                 // 이메일, 성별, 닉네임, 프로필이미지
                 var id = res.id;
-                document.getElementById("id").value = parseInt(id);
+                var name = res.properties.nickname;
+                document.getElementById("name").innerHTML = name;
+                document.getElementById("id").value = String(id);
                 console.log(id);
             }
         });

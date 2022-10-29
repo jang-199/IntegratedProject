@@ -16,9 +16,9 @@
   <header>
     <div>
       <nav class="nav nav-masthead justify-content-center float-md-end">
-        <a class="nav-link" href="http://localhost:8080">Home</a>
-        <a class="nav-link active" aria-current="page" href="http://localhost:8080/features">Features</a>
-        <a class="nav-link" href="http://localhost:8080/contact">Contact</a>
+        <a class="nav-link" href="http://124.60.219.83:8080">Home</a>
+        <a class="nav-link active" aria-current="page" href="http://124.60.219.83:8080/features">Features</a>
+        <a class="nav-link" href="http://124.60.219.83:8080/contact">Contact</a>
         <a class="nav-link" href="javascript:void(0)" onclick="kakaoLogin();">User</a>
       </nav>
     </div>
@@ -141,7 +141,7 @@
             url: '/v2/user/me',
             success: function (response) {
                 console.log(response)
-                location.href = 'http://localhost:8080/user'
+                location.href = 'http://124.60.219.83:8080/user'
             },
             fail: function (error) {
                 console.log(error)

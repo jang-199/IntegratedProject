@@ -27,6 +27,9 @@
       <h1>우리가족지킴이</h1>
       <p></p>
       <p>이 웹 사이트는 Gavengers의 '우리 가족 지킴이' 앱 사용자를 위한 사이트입니다.</p>
+      <br>
+      <br>
+      <p>이 웹 사이트는 PC 환경에서만 지원합니다</p>
     </div>
   </main>
   <footer class="mt-auto text-white">
@@ -39,25 +42,25 @@
 </html>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script>
-  Kakao.init('9277d84d6be1847891be44f1fc984517');
-  console.log(Kakao.isInitialized());
-  function kakaoLogin() {
-    Kakao.Auth.login({
-      success: function (response) {
-        Kakao.API.request({
-          url: '/v2/user/me',
-          success: function (response) {
-            location.href = 'http://124.60.219.83:8080/user'
-            console.log(response)
-          },
-          fail: function (error) {
+    Kakao.init('9277d84d6be1847891be44f1fc984517');
+    console.log(Kakao.isInitialized());
+    function kakaoLogin() {
+        Kakao.Auth.login({
+        success: function (response) {
+            Kakao.API.request({
+            url: '/v2/user/me',
+            success: function (response) {
+                location.href = 'http://124.60.219.83:8080/user'
+                console.log(response)
+            },
+            fail: function (error) {
+                console.log(error)
+            },
+            })
+        },
+        fail: function (error) {
             console.log(error)
-          },
+        },
         })
-      },
-      fail: function (error) {
-        console.log(error)
-      },
-    })
-  }
+    }
 </script>
