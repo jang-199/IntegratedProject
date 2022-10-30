@@ -1,15 +1,9 @@
 package com.example.IntegratedProject.service;
 
-import com.example.IntegratedProject.dao.SensingRepository;
-import com.example.IntegratedProject.entity.Device;
 import com.example.IntegratedProject.entity.Sensing;
-import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +18,14 @@ public class SensingService {
 
         List<Sensing> sensingList = new ArrayList<>();
 
-        if (page + 1 != totalPage){ // 맨 마지막 이전 페이지까지의 계산
+        if (totalPage == 0){
+            startRow = 0;
+            endRow = 0;
+            List<Sensing> sensings1 = sensings.subList(startRow, endRow);
+
+            sensingList.addAll(sensings1);
+        }
+        else if (page + 1 != totalPage){ // 맨 마지막 이전 페이지까지의 계산
             List<Sensing> sensings1 = sensings.subList(startRow, endRow);
 
             sensingList.addAll(sensings1);
@@ -40,5 +41,4 @@ public class SensingService {
 
         return sensingList;
     }
-
 }

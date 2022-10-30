@@ -11,8 +11,6 @@ import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +19,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -287,6 +284,9 @@ public class DataController {
                      Model model){
 
         log.info("Web - UserPk : {}, LocalDate : {}, Page : {}", userPk, datetimepicker1Input, page);
+
+        model.addAttribute("userPk", userPk);
+        model.addAttribute("LocalDate", datetimepicker1Input);
 
         Optional<List<UserDevice>> deviceByUserPk = userDeviceRepository.findDeviceByUserPk(new UserPk(userPk));
         //입력한 userPk로 UserDevice 테이블에서 deviceId 리스트로 가져온 것.

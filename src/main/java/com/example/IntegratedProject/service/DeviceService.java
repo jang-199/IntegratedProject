@@ -2,6 +2,7 @@ package com.example.IntegratedProject.service;
 
 import com.example.IntegratedProject.dao.DeviceRepository;
 import com.example.IntegratedProject.entity.Device;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
