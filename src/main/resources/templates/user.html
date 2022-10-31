@@ -31,12 +31,16 @@
 }
 </style>
 <body>
+<footer class="mt-auto text-black text-center">
+    <p>Cover 2022, Gavengers Allrights reserved </p>
+</footer>
+
 <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
     <header>
         <div>
             <div class="float-md-start mb-0" style="font-weight: bold;" id="name" name="name"></div>님
             <nav class="nav nav-masthead justify-content-center float-md-end">
-                <a class="nav-link" href="http://124.60.219.83:8080">Home</a>
+                <a class="nav-link" href="http://124.60.219.83:8080/">Home</a>
                 <a class="nav-link" href="http://124.60.219.83:8080/features">Features</a>
                 <a class="nav-link" href="http://124.60.219.83:8080/contact">Contact</a>
                 <a class="nav-link" href="javascript:void(0)" onclick="kakaoLogout();">Logout</a>
@@ -71,18 +75,32 @@
         </tr>
     </table>
 
+    <!-- 페이징 -->
     <div class="pagination" th:if="${totalPage>0}">
         <ul class="ulPagination">
-            <li th:each="page : ${#numbers.sequence(1, totalPage)}" class="liPagination">
+            <!-- 처음 페이지로 이동 -->
+            <li class="liPagination">
+                <a th:href="@{/search/web(datetimepicker1Input=${LocalDate},userPk=${userPk},page=0)}" th:text="'<<'" class="btn btn-outline-success" style="text-decoration: none;"></a>
+            </li>
+            <!-- 이전 페이지로 이동 -->
+            <li th:if="${tempStartPage >= pageSize}"class="liPagination">
+                <a th:href="@{/search/web(datetimepicker1Input=${LocalDate},userPk=${userPk},page=${left})}" th:text="'<'" class="btn btn-outline-success"></a>
+            </li>
+            <!-- 특정 페이지로 이동 -->
+            <li th:each="page : ${#numbers.sequence(tempStartPage+1, tempEndPage+1)}" class="liPagination">
                 <a th:href="@{/search/web(datetimepicker1Input=${LocalDate},userPk=${userPk},page=${page-1})}" th:text="${page}" id="link" class="btn btn-outline-success"></a>
+            </li>
+            <!-- 다음 페이지로 이동 -->
+            <li th:if="${tempEndPage < totalPage-1}" class="liPagination">
+                <a th:href="@{/search/web(datetimepicker1Input=${LocalDate},userPk=${userPk},page=${right})}" th:text="'>'" class="btn btn-outline-success"></a>
+            </li>
+            <!-- 마지막 페이지로 이동 -->
+            <li class="liPagination">
+                <a th:href="@{/search/web(datetimepicker1Input=${LocalDate},userPk=${userPk},page=${totalPage-1})}" th:text="'>>'" class="btn btn-outline-success"></a>
             </li>
         </ul>
     </div>
-
 </div>
-<footer class="mt-auto text-black text-center">
-    <p>Cover 2022, Gavengers Allrights reserved </p>
-</footer>
 </body>
 </html>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
