@@ -35,7 +35,9 @@ public class DataController {
     private final SensingService sensingService;
 
     @GetMapping
-    String index() { return "index"; }
+    String index() {
+        return "index";
+    }
 
     @GetMapping("features")
     String features() {
@@ -48,7 +50,9 @@ public class DataController {
     }
 
     @GetMapping("user")
-    String user() { return "user"; }
+    String user() {
+        return "user";
+    }
 
     @ResponseBody
     @PostMapping("/register/device") // 기기 등록
@@ -81,7 +85,7 @@ public class DataController {
     }
 
     @ResponseBody
-    @PostMapping("/register/userdevice") //유저의 device 등록
+    @PostMapping("/register/userdevice") // 유저의 device 등록
     String userDeviceRegister(@RequestBody UserDTO userDTO) {
         log.info("userPk의 : {}, deviceId 등록 : {}", userDTO.getUserPk(), userDTO.getDeviceId());
 
@@ -89,7 +93,7 @@ public class DataController {
 
         JsonObject jsonObject = new JsonObject();
 
-        if(deviceRepository.findById(userDTO.getDeviceId()).isPresent()){ //입력한 deviceId가 DB에 존재한다면~
+        if(deviceRepository.findById(userDTO.getDeviceId()).isPresent()){ // 입력한 deviceId가 DB에 존재하는지 검사
             if (!userDeviceRepository.findByUserPkAndDevice(new UserPk(userDTO.getUserPk()), new Device(userDTO.getDeviceId())).isPresent()){ // 특정 UserPk가 같은 Device 등록 방지
                 userDevice.setUserPk(new UserPk(userDTO.getUserPk()));
                 userDevice.setDevice(new Device(userDTO.getDeviceId()));
